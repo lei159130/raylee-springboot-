@@ -1,0 +1,103 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="keywords" content="雷力简历，Ray•Lee">
+<meta name="description" content="雷力的个人简历">
+<meta name="author" content="雷力,Ray•Lee">
+<link href="https://cdn.bootcss.com/twitter-bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+<link href="https://cdn.bootcss.com/layer/2.3/skin/layer.css" rel="stylesheet">
+<link th:href="@{/css/home.css}" rel="stylesheet">
+<title>Ray•Lee</title>
+</head>
+
+<body>
+	<div id="wapper container-fluid">
+		<div class="content panel panel-default">
+			<div class="contepanel-body text-center">
+				<h1>Ray•Lee</h1>
+				<h4>一个拥有轻微强迫症的程序猿</h4>
+				<h4>
+					<img id="wechat" class="wechat img-rounded" th:src="@{/img/wechat.jpg}" />
+					<a title="微信" href="javascript:void(0)" onmouseover="$('#wechat').show()" onmouseout="$('#wechat').hide()">
+						<i class="fa fa-weixin fa-fw"></i>
+					</a>
+					<a title="邮箱" href="mailto:lei159130@sina.cn">
+						<i class="fa fa-envelope fa-fw"></i>
+					</a>
+					<a title="QQ" target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=584830792&site=qq&menu=yes">
+						<i class="fa fa-qq fa-fw"></i>
+					</a>
+					<a title="github" target="_blank" href="https://github.com/lei159130">
+						<i class="fa fa-github fa-fw"></i>
+					</a>
+					<a title="留言" target="_blank" href="javascript:void(0)" data-toggle="modal" data-target="#messageModal">
+						<i class="fa fa-commenting-o fa-fw"></i>
+					</a>
+				</h4>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade bs-example-modal-sm" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="messageModelTitle">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="messageModelTitle">留言</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form id="messageForm">
+						<div class="form-group">
+							<label for="phone" class="control-label">手机号:</label> <input type="text" class="form-control" id="phone" name="phone" placeholder="请输入手机号" />
+						</div>
+						<div class="form-group">
+							<label for="message" class="control-label">内容:</label>
+							<textarea class="form-control" id="message" name="message" maxlength="500" placeholder="请输入内容" rows="5"></textarea>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" onclick="fnSubmit()">发送</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdn.bootcss.com/twitter-bootstrap/4.1.3/js/bootstrap.min.js"></script>
+	<script src="https://cdn.bootcss.com/layer/2.3/layer.js"></script>
+	<script type="text/javascript" th:src="@{/js/utils.js}"></script>
+</body>
+<script type="text/javascript">
+	function fnSubmit() {
+		var params = $('#messageForm').serializeObject();
+		try {
+			paramsCheck(phoneReg, params.phone, '手机号输入有误!');
+			paramsCheck(null, params.message, '内容不能为空!');
+		} catch (err) {
+			layer.msg(err, {
+				icon : 2
+			});
+			return false;
+		}
+		$.post('[[@{/sendMessage}]]', params, function(data) {
+
+			if (data.retCode == 200) {
+				$('#messageModal').modal('hide');
+				layer.msg('发送成功!', {
+					icon : 1
+				});
+			} else {
+				layer.msg(data.message, {
+					icon : 2
+				});
+			}
+		});
+	}
+</script>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>音乐随意听</title>
+<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<link th:href="@{/css/main.css}" rel="stylesheet">
+<style type="text/css">
+.nav {
+	width: 100%;
+	height: 55px;
+	background: #e60012;
+	line-height: 55px;
+}
+
+.nav .w1000 {
+	line-height: 55px;
+	position: relative;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.nav .w1000 .span {
+	display: inline-block;
+}
+
+.nav .w1000 a {
+	color: #fff;
+	margin: 0 5px 0 5px;
+	font-size: 14px;
+	font-family: 'SimSun';
+}
+
+.audio_control .audio_player .fa {
+	width: 20px;
+}
+</style>
+</head>
+<body>
+	<div class="nav">
+		<div class="w1000">
+			<span th:each="menu:${menus}">
+				<a th:href="@{'/audio/'+ ${menu.id}}" th:text="${menu.name}"></a>
+			</span>
+		</div>
+	</div>
+	<div class="audio_control ">
+		<audio class="J-audio" th:src="@{${peopleDaily.audioUrl}}">
+			本页面采用HTML5编辑，目前您的浏览器无法显示，请换成谷歌(
+			<a href="https://www.google.com/chrome/">Chrome</a>
+			)浏览器，或者其他游览器的最新版本。
+		</audio>
+		<span class="audio_head" th:text="${peopleDaily.title}"></span>
+		<span class="audio_player">
+			<a th:if="${prev!=null}" th:href="@{'/audio/'+ ${code}+ '/'+ ${prev}}">
+				<i class="fa fa-backward"></i>
+			</a>
+			<a href="javascript:void(0)" id="play">
+				<i class="fa fa-play"></i>
+			</a>
+			<a href="javascript:void(0)" class="c-hide" id="pause">
+				<i class="fa fa-pause"></i>
+			</a>
+			<a th:if="${next!=null}" th:href="@{'/audio/'+ ${code}+ '/'+ ${next}}">
+				<i class="fa fa-forward"></i>
+			</a>
+		</span>
+		<span class="audio_time J-audio-time">
+			<i> <span id="minute">00</span>:<span id="second">00</span>
+			</i> /
+			<span th:text="${peopleDaily.audioPlayTime}"></span>
+		</span>
+	</div>
+	<div class="article-container share-container wrapper-position">
+		<div class="article" th:utext="${peopleDaily.content}"></div>
+	</div>
+</body>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+	var audio = $('.J-audio')[0], play = $('#play'), pause = $('#pause'), minute, second, vMinute = 0, vSecond = 0, interval;
+
+	$(document).ready(function(e) {
+		var time = '[[${peopleDaily.audioPlayTime}]]'.split(":");
+		minute = parseInt(time[0]);
+		second = parseInt(time[1]);
+		$('#play').click(function(e1) {
+			fnPlay();
+		});
+		$('#pause').click(function(e1) {
+			fnPause();
+		});
+	});
+
+	function fnPlay() {
+		interval = window.setInterval("fnRefreshAudioTime()", 1000);
+		audio.play();
+		play.addClass('c-hide');
+		pause.removeClass('c-hide');
+	}
+	function fnPause() {
+		window.clearInterval(interval);
+		audio.pause();
+		play.removeClass('c-hide');
+		pause.addClass('c-hide');
+	}
+	function fnRefreshAudioTime() {
+		if (vMinute == minute && vSecond == second) {
+			fnPause();
+			vMinute = 0;
+			vSecond = 0;
+		} else {
+			if (vSecond < 60) {
+				vSecond++;
+			} else if (vSecond == 60) {
+				vMinute++;
+				vSecond = 0;
+			}
+		}
+		fnDrawTime(vMinute, vSecond);
+	}
+	function fnDrawTime(m, s) {
+		$('#minute').text(m < 10 ? '0' + m : m);
+		$('#second').text(s < 10 ? '0' + s : s);
+	}
+</script>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>vip视频免费看</title>
+<link href="https://cdn.bootcss.com/twitter-bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+<link th:href="@{/css/style.css}" rel="stylesheet">
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/twitter-bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div class="container ">
+		<div class="tit-name">
+			<span>正在播放:</span>
+			<h1 id="tittext">感谢您使用视频解析服务！为您播放音乐MV！</h1>
+		</div>
+		<iframe id="palybox" th:src="@{${api }+${url}}" allowtransparency="true" allowfullscreen="true"></iframe>
+		<div class="url-box">
+			<div class="input-group">
+				<input type="text" id="url" class="form-control url-text" aria-label="Text input with segmented button dropdown" placeholder="请粘贴视频网址>ㅂ<ﾉ ☆" title="请复制你想要看的视频网址，粘贴到此处点击播放即可！">
+				<div class="input-group-addon">
+					<select onchange="changeSource(this)" class="url-c url-text" title="如发现视频无法正常播放请尝试更换视频线路！">
+						<option th:each="videoApi,vs:${videoApis}" th:attr="value=${videoApi.url }" th:text="'线路'+${vs.count }"></option>
+					</select>
+				</div>
+				<div class="input-group-btn">
+					<button type="button" class="btn btn-default btn-play" onclick="play()">解析播放</button>
+				</div>
+			</div>
+		</div>
+		<div class="tit-gg">
+			<span>若视频播放异常，尝试刷新或更换接口即可解决！</span>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	var api = '[[${api}]]', url = '[[${url}]]';
+	function changeSource(e) {
+		api = $(e).val();
+	}
+	function play() {
+		var temp = $('#url').val();
+		if (!temp) {
+			temp = url;
+		}
+		$('#palybox').attr('src', api + temp);
+	}
+</script>
+</html>
