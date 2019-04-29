@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh-CN">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>系统设置</title>
+</head>
+<body>
+	<table id="app">
+		<thead align="center">
+			<tr>
+				<th width="15%">键</th>
+				<th width="35%">值</th>
+				<th width="35%">描述</th>
+				<th width="15%">操作</th>
+			</tr>
+		</thead>
+		<tbody align="center">
+			<tr v-for="(prop,index) in props">
+				<td>{{prop.code}}</td>
+				<td>{{prop.content}}</td>
+				<td>{{prop.description}}</td>
+				<td><a href="javascript:void(0);" @click="pop(index,prop.code,prop.content,prop.description)">修改</a></td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+<script src="https://cdn.bootcss.com/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="https://cdn.bootcss.com/layer/2.3/layer.js"></script>
+<script type="text/javascript">
+	var vm;
+	$(document).ready(function() {
+		vm = new Vue({
+			el : '#app',
+			data : {
+				props : []
+			},
+			created : function() {
+				requestData();
+			},
+			mounted : function() {
+			}
+		});
+	});
+
+	var requestData = function() {
+		$.post('[[@{/sysconfig/list}]]', {}, function(result) {
+			vm.props = result.data;
+		});
+	}, pop = function(index, code, content, desc) {
+		var html = '<table><tr><td>键</td><td><input type="text" id="code" value="'+code+'" disabled="disabled" /></td></tr><tr><td>值</td><td><input type="text" id="content" value="'+content+'"/></td></tr><tr><td>描述</td><td><input type="text" id="desc" value="'+desc+'"/></td></tr></table>';
+		layer.open({
+			title : '修改',
+			content : html,
+			yes : function() {
+				content = $('#content').val();
+				desc = $('#desc').val();
+				if (!content) {
+					layer.alert('值不能为空');
+					return;
+				}
+				$.post('[[@{/sysconfig/update}]]', {
+					code : code,
+					content : content,
+					description : desc
+				}, function(result) {
+					if (result.retCode == '200') {
+						vm.props[index].content = content;
+						vm.props[index].description = desc;
+					}
+					layer.alert(result.message);
+				});
+			}
+		});
+	};
+</script>
+</html>

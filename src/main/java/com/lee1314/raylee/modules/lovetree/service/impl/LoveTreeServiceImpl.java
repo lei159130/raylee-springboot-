@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.baidubce.services.bos.model.PutObjectResponse;
-import com.lee1314.raylee.modules.lovetree.dao.LoveTreeDao;
+import com.lee1314.raylee.modules.lovetree.dao.mapping.LoveTreeDao;
 import com.lee1314.raylee.modules.lovetree.model.LoveTree;
 import com.lee1314.raylee.modules.lovetree.service.LoveTreeService;
 import com.lee1314.raylee.utils.BocUtils;

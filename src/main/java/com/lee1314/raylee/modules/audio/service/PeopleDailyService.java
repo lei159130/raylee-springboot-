@@ -17,14 +17,14 @@ public interface PeopleDailyService {
 	 * @return
 	 * @throws Exception
 	 */
-	PeopleDaily findById(Integer id) throws Exception;
+	PeopleDaily findById(Long id) throws Exception;
 
 	/**
 	 * 获取最新一条数据的ID
 	 * 
 	 * @return
 	 */
-	Integer findNewID(Integer seminarId);
+	Long findNewID(Integer seminarId);
 
 	/**
 	 * 获取当前ID上一条数据
@@ -33,7 +33,7 @@ public interface PeopleDailyService {
 	 * @return
 	 * @throws Exception
 	 */
-	Integer findPrevId(Integer id, Integer seminarId) throws Exception;
+	Long findPrevId(Long id, Integer seminarId) throws Exception;
 
 	/**
 	 * 获取当前ID下一条数据
@@ -42,7 +42,7 @@ public interface PeopleDailyService {
 	 * @return
 	 * @throws Exception
 	 */
-	Integer findNextId(Integer id, Integer seminarId) throws Exception;
+	Long findNextId(Long id, Integer seminarId) throws Exception;
 
 	/**
 	 * 获取当前id上一条加密后的id
@@ -51,7 +51,7 @@ public interface PeopleDailyService {
 	 * @return
 	 * @throws Exception
 	 */
-	String findEncodePrevId(Integer id, Integer seminarId) throws Exception;
+	String findEncodePrevId(Long id, Integer seminarId) throws Exception;
 
 	/**
 	 * 获取当前id下一条加密后的id
@@ -60,6 +60,6 @@ public interface PeopleDailyService {
 	 * @return
 	 * @throws Exception
 	 */
-	String findEncodeNextId(Integer id, Integer seminarId) throws Exception;
+	String findEncodeNextId(Long id, Integer seminarId) throws Exception;
 
 }

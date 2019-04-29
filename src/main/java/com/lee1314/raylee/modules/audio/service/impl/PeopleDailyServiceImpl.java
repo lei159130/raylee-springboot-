@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.lee1314.raylee.modules.audio.dao.PeopleDailyDao;
+import com.lee1314.raylee.modules.audio.dao.mapping.PeopleDailyDao;
 import com.lee1314.raylee.modules.audio.model.PeopleDaily;
 import com.lee1314.raylee.modules.audio.service.PeopleDailyService;
 import com.lee1314.raylee.utils.EncryDecryUtils;
@@ -26,28 +26,28 @@ public class PeopleDailyServiceImpl implements PeopleDailyService {
 	private PeopleDailyDao mapper;
 
 	@Override
-	public PeopleDaily findById(Integer id) throws Exception {
+	public PeopleDaily findById(Long id) throws Exception {
 		return mapper.selectByPrimaryKey(id);
 	}
 
 	@Override
-	public Integer findNewID(Integer seminarId) {
+	public Long findNewID(Integer seminarId) {
 		return mapper.selectNewId(seminarId);
 	}
 
 	@Override
-	public Integer findPrevId(Integer id, Integer seminarId) throws Exception {
+	public Long findPrevId(Long id, Integer seminarId) throws Exception {
 		return mapper.selectPrevId(id, seminarId);
 	}
 
 	@Override
-	public Integer findNextId(Integer id, Integer seminarId) throws Exception {
+	public Long findNextId(Long id, Integer seminarId) throws Exception {
 		return mapper.selectNextId(id, seminarId);
 	}
 
 	@Override
-	public String findEncodePrevId(Integer id, Integer seminarId) throws Exception {
-		Integer prev = findPrevId(id, seminarId);
+	public String findEncodePrevId(Long id, Integer seminarId) throws Exception {
+		Long prev = findPrevId(id, seminarId);
 		if (prev == null)
 			return null;
 
@@ -55,8 +55,8 @@ public class PeopleDailyServiceImpl implements PeopleDailyService {
 	}
 
 	@Override
-	public String findEncodeNextId(Integer id, Integer seminarId) throws Exception {
-		Integer next = findNextId(id, seminarId);
+	public String findEncodeNextId(Long id, Integer seminarId) throws Exception {
+		Long next = findNextId(id, seminarId);
 		if (next == null)
 			return null;
 

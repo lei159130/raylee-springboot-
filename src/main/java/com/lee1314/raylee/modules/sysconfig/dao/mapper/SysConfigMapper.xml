@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lee1314.raylee.modules.sysconfig.dao.mapping.SysConfigDao">
+	<resultMap id="BaseResultMap" type="com.lee1314.raylee.modules.sysconfig.model.SysConfig">
+		<id column="code" property="code" jdbcType="VARCHAR" />
+		<result column="content" property="content" jdbcType="VARCHAR" />
+		<result column="description" property="description" jdbcType="VARCHAR" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="modify_data" property="modifyData" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		code, content, description, create_date, modify_data
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from sys_config
+		where code = #{code,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from sys_config
+		where code = #{code,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.lee1314.raylee.modules.sysconfig.model.SysConfig">
+		insert into sys_config (code, content, description,
+		create_date, modify_data)
+		values (#{code,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},
+		#{createDate,jdbcType=TIMESTAMP}, #{modifyData,jdbcType=TIMESTAMP})
+	</insert>
+	<insert id="insertSelective" parameterType="com.lee1314.raylee.modules.sysconfig.model.SysConfig">
+		insert into sys_config
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="code != null">
+				code,
+			</if>
+			<if test="content != null">
+				content,
+			</if>
+			<if test="description != null">
+				description,
+			</if>
+			<if test="createDate != null">
+				create_date,
+			</if>
+			<if test="modifyData != null">
+				modify_data,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="code != null">
+				#{code,jdbcType=VARCHAR},
+			</if>
+			<if test="content != null">
+				#{content,jdbcType=VARCHAR},
+			</if>
+			<if test="description != null">
+				#{description,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				#{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyData != null">
+				#{modifyData,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.lee1314.raylee.modules.sysconfig.model.SysConfig">
+		update sys_config
+		<set>
+			<if test="content != null">
+				content = #{content,jdbcType=VARCHAR},
+			</if>
+			<if test="description != null">
+				description = #{description,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				create_date = #{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyData != null">
+				modify_data = #{modifyData,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where code = #{code,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.lee1314.raylee.modules.sysconfig.model.SysConfig">
+		update sys_config
+		set content = #{content,jdbcType=VARCHAR},
+		description = #{description,jdbcType=VARCHAR},
+		create_date = #{createDate,jdbcType=TIMESTAMP},
+		modify_data = #{modifyData,jdbcType=TIMESTAMP}
+		where code = #{code,jdbcType=VARCHAR}
+	</update>
+	<select id="selectAll" resultMap="BaseResultMap">
+		SELECT * FROM sys_config
+	</select>
+</mapper>

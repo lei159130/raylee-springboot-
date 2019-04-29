@@ -12,7 +12,7 @@ public class PeopleDaily {
 	/**
 	 * 主键
 	 */
-	private Integer id;
+	private Long id;
 
 	/**
 	 * 标题
@@ -54,11 +54,11 @@ public class PeopleDaily {
 	 */
 	private Integer seminarId;
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

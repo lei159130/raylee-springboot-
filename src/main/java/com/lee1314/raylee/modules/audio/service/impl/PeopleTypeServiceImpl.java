@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lee1314.raylee.commons.cache.MenusCache;
-import com.lee1314.raylee.modules.audio.dao.PeopleTypeDao;
+import com.lee1314.raylee.modules.audio.dao.mapping.PeopleTypeDao;
 import com.lee1314.raylee.modules.audio.model.PeopleType;
 import com.lee1314.raylee.modules.audio.service.PeopleTypeService;
 

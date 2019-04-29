@@ -3,7 +3,6 @@ package com.lee1314.raylee.modules.lovetree.controller;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import com.lee1314.raylee.commons.cache.SysConfigChace;
 import com.lee1314.raylee.constants.CodeMsg;
 import com.lee1314.raylee.constants.Result;
 import com.lee1314.raylee.modules.lovetree.model.LoveTree;
@@ -30,14 +30,12 @@ import com.lee1314.raylee.modules.lovetree.service.LoveTreeService;
 @RequestMapping("lovetree")
 public class LoveTreeController {
 
-	@Value("${lovetreeUrl}")
-	private String lovetreeUrl;
 	@Autowired
 	private LoveTreeService loveTreeService;
 
 	@RequestMapping
 	public String skipIndex(Model model) {
-		LoveTree loveTree = loveTreeService.findLoveTreeByUrl(lovetreeUrl);
+		LoveTree loveTree = loveTreeService.findLoveTreeByUrl(SysConfigChace.get("lovetreeUrl"));
 		model.addAttribute("lovetree", loveTree);
 		return "lovetree/index";
 	}

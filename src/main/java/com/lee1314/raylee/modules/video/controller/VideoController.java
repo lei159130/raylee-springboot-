@@ -3,11 +3,11 @@ package com.lee1314.raylee.modules.video.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.lee1314.raylee.commons.cache.SysConfigChace;
 import com.lee1314.raylee.modules.video.model.VideoApi;
 import com.lee1314.raylee.modules.video.service.VideoApiService;
 
@@ -24,8 +24,6 @@ import com.lee1314.raylee.modules.video.service.VideoApiService;
 @RequestMapping("/video")
 public class VideoController {
 
-	@Value("${videoUrl}")
-	private String videoUrl;
 	@Autowired
 	private VideoApiService videoApiService;
 
@@ -33,7 +31,7 @@ public class VideoController {
 	public String skipIndex(Model model) {
 		List<VideoApi> videoApis = videoApiService.findUrls();
 		model.addAttribute("api", videoApis.get(0).getUrl());
-		model.addAttribute("url", videoUrl);
+		model.addAttribute("url", SysConfigChace.get("videoUrl"));
 		model.addAttribute("videoApis", videoApis);
 		return "video/index";
 	}
