@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>小说免费看</title>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<style type="text/css">
+#wrapper {
+	height: 55px;
+}
+
+.content_left {
+	width: 540px;
+	padding-left: 121px;
+	padding-top: 5px;
+	float: left;
+}
+
+.content_right {
+	margin-top: 45px;
+	margin-right: 100px;
+	border-left: 1px solid #e1e1e1;
+	padding-left: 17px;
+	float: right;
+}
+
+.index-logo {
+	float: left;
+	margin: 7px 0 0;
+}
+
+.index-logo-src {
+	float: left;
+	width: 101px;
+	height: 33px;
+	border: 0;
+}
+
+.fm {
+	clear: none;
+	float: left;
+	margin: 11px 0 0 10px;
+	position: relative;
+	z-index: 297;
+	padding: 0;
+	list-style: none;
+}
+
+.s_ipt_wr {
+	width: 439px;
+	background: 0 0;
+	margin-right: 0;
+	border-right-width: 0;
+	border-color: #b8b8b8 transparent #ccc #b8b8b8;
+	overflow: hidden;
+	display: inline-block;
+	vertical-align: top;
+	border: 1px solid #b6b6b6;
+	height: 32px;
+}
+
+.s_ipt {
+	width: 395px;
+	position: relative;
+	height: 22px;
+	font: 16px/18px arial;
+	line-height: 22px;
+	margin: 6px 0 0 7px;
+	padding: 0;
+	background: transparent;
+	border: 0;
+	outline: 0;
+	-webkit-appearance: none;
+}
+
+.s_btn_wr {
+	background-image: none;
+	width: auto;
+	height: auto;
+	border-bottom: 1px solid transparent;
+	display: inline-block;
+	background-position: -120px -48px;
+	z-index: 0;
+	vertical-align: top;
+}
+
+.s_btn {
+	background-image: none;
+	width: 100px;
+	height: 34px;
+	color: #fff;
+	letter-spacing: 1px;
+	background: #3385ff;
+	border-bottom: 1px solid #2d78f4;
+	outline: medium;
+	-webkit-appearance: none;
+	-webkit-border-radius: 0;
+	font-size: 14px;
+	padding: 0;
+	border: 0;
+	cursor: pointer;
+}
+
+.ipthover {
+	border-color: #999 transparent #b3b3b3 #999 !important;
+}
+
+.iptfocus {
+	border-color: #4791ff transparent #4791ff #4791ff !important;
+}
+
+.btnhover {
+	background: #317ef3 !important;
+	border-bottom: 1px solid #2868c8 !important;
+	box-shadow: 1px 1px 1px #ccc !important;
+}
+
+.s_btn_h {
+	background: #3075dc !important;
+	box-shadow: inset 1px 1px 5px #2964bb !important;
+}
+
+.result {
+	margin-top: 14px;
+	width: 538px;
+	font-size: 13px;
+	line-height: 1.54;
+}
+
+.title {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	font-weight: 400;
+	font-size: medium;
+	margin-bottom: 1px;
+}
+
+.title a {
+	text-decoration: none;
+}
+
+.title a:link {
+	color: blue;
+}
+
+.title a:hover {
+	text-decoration: underline;
+}
+
+.title a:visited {
+	color: rgb(85, 26, 139);
+}
+
+.row {
+	margin-top: 5px;
+	height: 80px;
+}
+
+.row_img {
+	float: left;
+	width: 55px;
+	height: 75px;
+	list-style: none;
+	margin-right: 17px;
+}
+
+.desc {
+	height: 75px;
+}
+
+.content_right table {
+	border: 0;
+	-webkit-border-horizontal-spacing: 0px;
+	-webkit-border-vertical-spacing: 0px;
+}
+
+.content_right table tbody {
+	display: table-row-group;
+	vertical-align: middle;
+	border-color: inherit;
+}
+
+.content_right table tbody tr {
+	display: table-row;
+	vertical-align: inherit;
+	border-color: inherit;
+}
+
+.content_right table tbody tr td {
+	font-size: 9pt;
+	line-height: 18px;
+	font-family: arial;
+	text-align: -webkit-left;
+	display: table-cell;
+	vertical-align: inherit;
+}
+
+.content_right .cr-content {
+	width: 259px;
+	font-size: 13px;
+	line-height: 1.54;
+	color: #333;
+	word-wrap: break-word;
+	word-break: normal;
+}
+
+.cr-content table {
+	border-collapse: collapse;
+	border-spacing: 0;
+	width: 100%;
+	border: 0;
+}
+
+.cr-content table tbody {
+	display: table-row-group;
+	vertical-align: middle;
+	border-color: inherit;
+}
+
+.cr-content table tbody tr {
+	display: table-row;
+	vertical-align: inherit;
+	border-color: inherit;
+}
+
+.c-table td {
+	padding-top: 6.5px;
+	padding-bottom: 6.5px;
+	line-height: 1.54;
+	font-size: 13px;
+	border-bottom: 1px solid #f3f3f3;
+	text-align: left;
+	vertical-align: top;
+	font-family: arial;
+}
+
+.c-table td:first-child {
+	padding-left: 0;
+}
+
+.opr-toplist1-right {
+	text-align: right;
+	white-space: nowrap;
+}
+
+.c-index {
+	display: inline-block;
+	padding: 1px 0;
+	color: #fff;
+	width: 50px;
+	line-height: 100%;
+	font-size: 12px;
+	text-align: center;
+	background-color: #8eb9f5;
+	margin-right: 5px;
+}
+
+.c-index-hot1 {
+	background-color: #f54545;
+}
+
+.c-index-hot2 {
+	background-color: #ff8547;
+}
+
+.c-index-hot3 {
+	background-color: #ffac38;
+}
+
+.c-table a {
+	text-decoration: none;
+}
+
+.c-table a:-webkit-any-link {
+	color: -webkit-link;
+	cursor: pointer;
+}
+
+.opr-toplist1-right {
+	text-align: right;
+	white-space: nowrap;
+}
+</style>
+</head>
+<body>
+
+	<div id="wrapper">
+		<div class="index-logo">
+			<img class="index-logo-src" src="//www.baidu.com/img/baidu_jgylogo3.gif" usemap="#mp">
+			<map name="mp">
+				<area style="outline: none;" shape="rect" coords="0,0,270,129" href="javascript:void(0)" onmousedown="return ns_c({fm: 'tab', tab: 'felogo', rsv_platform: 'wwwhome' })"
+					target="_blank" title="点击一下，了解更多">
+			</map>
+		</div>
+		<form id="form" th:action="@{/novel/search}" class="fm">
+			<span class="s_ipt_wr"> <input id="kw" name="keyword" th:value="${keyword }" class="s_ipt" maxlength="255" autocomplete="off">
+			</span><span class="s_btn_wr"><input type="submit" id="su" value="百度一下" class="s_btn"></span>
+		</form>
+	</div>
+	<div class="container_s">
+		<div class="content_left">
+			<h3 class="title" th:if="${#lists.isEmpty(items)}">未找到该小说</h3>
+			<div th:each="item : ${items}">
+				<div class="result">
+					<h3 class="title">
+						<a th:href="@{'/novel/book/'+${item.id}}" target="_blank" th:text="${item.title}"></a>
+					</h3>
+					<div class="row">
+						<div class="row_img">
+							<a class="a_img" style="height: 75px" th:href="@{'/novel/book/'+${item.id}}" target="_blank">
+								<img class="img" th:src="${item.img}" style="height: 75px;">
+							</a>
+						</div>
+						<div class="row_desc">
+							<div class="desc" th:text="${item.desc }"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="content_right">
+			<table cellpadding="0" cellspacing="0">
+				<tbody>
+					<tr>
+						<td align="left">
+							<div class="cr-content ">
+								<table class="c-table opr-toplist1-table">
+									<tbody th:each="hot:${hots}">
+										<tr>
+											<td><span class="c-index" th:text="${hot.type}"></span></td>
+											<td><span> <a target="_blank" th:title="${hot.title }" th:href="@{'/novel/book/'+${hot.id} }" th:text="${hot.title }"></a></span></td>
+											<td class="opr-toplist1-right" th:text="${hot.author }"></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	$('#kw').hover(function() {
+		$('.s_ipt_wr').addClass('ipthover');
+	}, function() {
+		$('.s_ipt_wr').removeClass('ipthover');
+	});
+
+	$('#kw').focus(function() {
+		$('.s_ipt_wr').addClass('iptfocus');
+	});
+
+	$('#kw').blur(function() {
+		$('.s_ipt_wr').removeClass('iptfocus');
+	});
+
+	$('#su').hover(function() {
+		$(this).addClass('btnhover');
+	}, function() {
+		$(this).removeClass('btnhover');
+		$(this).blur();
+		$(this).removeClass('s_btn_h');
+	});
+
+	$('#su').focus(function() {
+		$(this).addClass('s_btn_h');
+	});
+</script>
+</html>

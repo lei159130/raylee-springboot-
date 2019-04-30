@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>小说免费看</title>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<style type="text/css">
+.box_con {
+	width: 976px;
+	border-width: 2px;
+	border-style: solid;
+	border-color: rgb(136, 198, 229);
+	border-image: initial;
+	overflow: hidden;
+	margin: 10px auto;
+	padding: 0px;
+}
+
+#list {
+	margin: auto;
+	padding: 2px;
+}
+
+#list dl {
+	float: left;
+	padding-bottom: 1px;
+	width: 100%;
+	overflow: hidden;
+	margin: auto;
+	padding: 0px;
+}
+
+#list dt {
+	display: inline;
+	float: left;
+	font-size: 14px;
+	line-height: 28px;
+	text-align: center;
+	vertical-align: middle;
+	width: 98%;
+	background: none 0px 0px repeat scroll rgb(195, 223, 234);
+	overflow: hidden;
+	margin: auto auto 5px;
+	padding: 5px 10px;
+}
+
+#list dd {
+	display: inline;
+	float: left;
+	height: 25px;
+	line-height: 200%;
+	font-size: 13px;
+	margin-bottom: 5px;
+	text-align: left;
+	text-indent: 10px;
+	vertical-align: middle;
+	width: 33%;
+	border-bottom: 1px dashed rgb(204, 204, 204);
+	overflow: hidden;
+	margin: auto;
+	padding: 0px;
+}
+</style>
+</head>
+<body>
+	<div class="box_con">
+		<div id="list">
+			<dl>
+				<dt th:text="${book.title }"></dt>
+				<dd th:each="chapter:${book.chapters }">
+					<a th:href="@{'/novel/book/'+${id}+'/'+${chapter.id}}" th:text="${chapter.title }"></a>
+				</dd>
+			</dl>
+		</div>
+	</div>
+</body>
+</html>

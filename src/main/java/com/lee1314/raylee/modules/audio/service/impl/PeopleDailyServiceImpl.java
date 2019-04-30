@@ -1,9 +1,6 @@
 package com.lee1314.raylee.modules.audio.service.impl;
 
-import java.net.URLEncoder;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.lee1314.raylee.modules.audio.dao.mapping.PeopleDailyDao;
@@ -20,8 +17,6 @@ import com.lee1314.raylee.utils.EncryDecryUtils;
 @Service
 public class PeopleDailyServiceImpl implements PeopleDailyService {
 
-	@Value("${system.encode}")
-	private String enc;
 	@Autowired
 	private PeopleDailyDao mapper;
 
@@ -51,7 +46,7 @@ public class PeopleDailyServiceImpl implements PeopleDailyService {
 		if (prev == null)
 			return null;
 
-		return URLEncoder.encode(URLEncoder.encode(EncryDecryUtils.Encry(String.valueOf(prev)), enc), enc);
+		return EncryDecryUtils.Encry(String.valueOf(prev));
 	}
 
 	@Override
@@ -60,7 +55,7 @@ public class PeopleDailyServiceImpl implements PeopleDailyService {
 		if (next == null)
 			return null;
 
-		return URLEncoder.encode(URLEncoder.encode(EncryDecryUtils.Encry(String.valueOf(next)), enc), enc);
+		return EncryDecryUtils.Encry(String.valueOf(next));
 	}
 
 }
