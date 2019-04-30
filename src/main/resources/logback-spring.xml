@@ -3,8 +3,8 @@
 
 	<contextName>logger</contextName>
 
-	<property name="log.path" value="D:/log" />
-	<!-- <property name="log.path" value="/home/raylee/logs" /> -->
+	<!-- <property name="log.path" value="D:/log" /> -->
+	<property name="log.path" value="/home/raylee/logs" />
 
 	<!--输出到控制台 -->
 	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
