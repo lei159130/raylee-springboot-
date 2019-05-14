@@ -1,14 +1,11 @@
 package com.lee1314.raylee.modules.novel.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.lee1314.raylee.modules.novel.model.NovelApi;
 import com.lee1314.raylee.modules.novel.service.NovelApiService;
 
 @Controller
@@ -20,8 +17,6 @@ public class NovelController {
 
 	@RequestMapping
 	public String skipIndex(Model model) {
-		List<NovelApi> apis = novelApiService.findUrls();
-		model.addAttribute("apis", apis);
 		return "novel/index";
 	}
 

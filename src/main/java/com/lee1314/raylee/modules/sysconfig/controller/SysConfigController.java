@@ -18,7 +18,7 @@ public class SysConfigController {
 	@Autowired
 	private SysConfigService sysConfigService;
 
-	@RequestMapping("")
+	@RequestMapping
 	public String skipIndex() {
 		return "system/index";
 	}
