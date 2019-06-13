@@ -19,7 +19,7 @@ html,body {
 	padding: 0;
 	background-color: #333333;
 	z-index: 50;
-	background-image: url(./Res/Floor.png);
+	background-image: url(../../img/mota/Floor.png);
 }
 
 #LoadTip {
@@ -84,7 +84,7 @@ html,body {
 	border: solid 3px #FFFFFF;
 	position: absolute;
 	background-color: #333333;
-	background-image: url(./Res/Floor.png);
+	background-image: url(../../img/mota/Floor.png);
 }
 
 #ToolGroup {
