@@ -32,9 +32,7 @@ public class NovelApiServiceImpl implements NovelApiService {
 	@Override
 	public List<Map> findListByKW(String keyword) {
 		NovelApi api = mapper.selectByConnects();
-		Map param = new HashMap<>();
-		param.put("keyword", keyword);
-		String result = HttpRequestUtils.doGet(api.getUrl() + SEARCH, param);
+		String result = HttpRequestUtils.doGet(api.getUrl() + keyword, null);
 		Document doc = Jsoup.parse(result);
 		Element resultList = doc.getElementsByClass("result-list").first();
 		Elements items = resultList.getElementsByClass("result-item");
