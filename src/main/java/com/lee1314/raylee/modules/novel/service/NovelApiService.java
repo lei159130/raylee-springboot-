@@ -3,6 +3,8 @@ package com.lee1314.raylee.modules.novel.service;
 import java.util.List;
 import java.util.Map;
 
+import org.jsoup.nodes.Document;
+
 import com.lee1314.raylee.modules.novel.model.NovelApi;
 
 /**
@@ -17,7 +19,7 @@ import com.lee1314.raylee.modules.novel.model.NovelApi;
 public interface NovelApiService {
 
 	static final String SEARCH = "/search.php";
-	static final String BOOK = "/book";
+	static final String BOOK = "/book/";
 
 	/**
 	 * 查询所有的API
@@ -35,27 +37,59 @@ public interface NovelApiService {
 	List<Map> findListByKW(String keyword);
 
 	/**
+	 * 查询小说章节目录Doc
+	 * 
+	 * @param id
+	 * @return
+	 */
+	Document findChaptersDoc(Integer id);
+
+	/**
+	 * 查询小说名
+	 * 
+	 * @param doc
+	 * @return
+	 */
+	String findBookTitle(Document doc, Integer id);
+
+	/**
 	 * 查询小说章节目录
 	 * 
-	 * @param id
+	 * @param doc
 	 * @return
 	 */
-	Map findMenus(Integer id);
+	List<Map> findChapters(Document doc);
 
 	/**
-	 * 查询小说正文
+	 * 查询小说章节
 	 * 
 	 * @param id
-	 * @param chapter
+	 * @param chapterId
 	 * @return
 	 */
-	Map findText(Integer id, Integer chapter);
+	Document findChapterDoc(Integer id, Integer chapterId);
 
 	/**
-	 * 获取热门小说
+	 * 获取小说内容
 	 * 
+	 * @param doc
 	 * @return
 	 */
-	List<Map> findHots();
+	String findContent(Document doc);
 
+	/**
+	 * 获取上一章节id
+	 * 
+	 * @param doc
+	 * @return
+	 */
+	String findChapterPrev(Document doc);
+
+	/**
+	 * 获取下一章节id
+	 * 
+	 * @param doc
+	 * @return
+	 */
+	String findChapterNext(Document doc);
 }

@@ -75,22 +75,22 @@
 <body>
 	<div class="box_con">
 		<div class="bookname">
-			<h1 th:text="${book.title }"></h1>
+			<h1 th:text="${title }"></h1>
 			<div class="bottem1">
-				<a th:href="@{'/novel/book/'+${id}+'/'+${book.prev}}">上一章</a>
+				<a th:href="@{'/novel/book/'+${id}+'/'+${prev}}">上一章</a>
 				←
 				<a th:href="@{'/novel/book/'+${id}}">章节列表</a>
 				→
-				<a th:href="@{'/novel/book/'+${id}+'/'+${book.next}}">下一章</a>
+				<a th:href="@{'/novel/book/'+${id}+'/'+${next}}">下一章</a>
 			</div>
 		</div>
-		<div id="content" th:utext="${book.content }"></div>
+		<div id="content" th:utext="${content }"></div>
 		<div class="bottem2">
-			<a th:href="@{'/novel/book/'+${id}+'/'+${book.prev}}">上一章</a>
+			<a th:href="@{'/novel/book/'+${id}+'/'+${prev}}">上一章</a>
 			←
 			<a th:href="@{'/novel/book/'+${id}}">章节目录</a>
 			→
-			<a th:href="@{'/novel/book/'+${id}+'/'+${book.next}}">下一章</a>
+			<a th:href="@{'/novel/book/'+${id}+'/'+${next}}">下一章</a>
 		</div>
 	</div>
 </body>

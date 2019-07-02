@@ -31,115 +31,82 @@ public class NovelApiServiceImpl implements NovelApiService {
 
 	@Override
 	public List<Map> findListByKW(String keyword) {
+		List<Map> maps = new ArrayList<>();
+
 		NovelApi api = mapper.selectByConnects();
 		String result = HttpRequestUtils.doGet(api.getUrl() + keyword, null);
 		Document doc = Jsoup.parse(result);
-		Element resultList = doc.getElementsByClass("result-list").first();
-		Elements items = resultList.getElementsByClass("result-item");
-		List<Map> maps = new ArrayList<>();
-		for (Element item : items) {
-			Map<String, Object> map = new HashMap<>();
-			Element img = item.getElementsByTag("img").first();
-			Element link = item.getElementsByClass("result-game-item-title-link").first();
-			Element desc = item.getElementsByClass("result-game-item-desc").first();
+		Elements hotSales = doc.select(".mybook>.hot_sale");
+		for (Element hotSale : hotSales) {
+			Element a = hotSale.select("a").first();
+			Element title = hotSale.select(".title").first();
+			Element author = hotSale.select(".author").first();
 
-			String url = link.attr("href");
-			url = url.substring(0, url.length() - 1);
+			Map<String, String> map = new HashMap<>();
+			String url = a.attr("href");
+			map.put("id", url.substring(url.lastIndexOf("/") + 1, url.length()));
+			map.put("title", title.text());
+			map.put("author", author.text());
 
-			map.put("img", img.attr("src"));
-			map.put("id", url.substring(url.lastIndexOf("/") + 1));
-			map.put("title", link.attr("title"));
-			map.put("desc", desc.text());
 			maps.add(map);
 		}
 		return maps;
 	}
 
 	@Override
-	public Map findMenus(Integer id) {
+	public Document findChaptersDoc(Integer id) {
 		NovelApi api = mapper.selectByConnects();
-		String result = HttpRequestUtils.doGet(api.getUrl() + BOOK + "/" + id, null, "GB2312");
-		Document doc = Jsoup.parse(result);
-		Element list = doc.getElementById("list");
-		Elements dds = list.getElementsByTag("dd");
-
-		String title = list.getElementsByTag("dt").first().text();
-		List<Map<String, String>> chapters = new ArrayList<>();
-		for (Element dd : dds) {
-			Map<String, String> map = new HashMap<>();
-			map.put("title", dd.text());
-			String url = dd.getElementsByTag("a").first().attr("href");
-			map.put("id", url.substring(url.lastIndexOf("/") + 1, url.lastIndexOf(".")));
-			chapters.add(map);
-		}
-		Map map = new HashMap<>();
-		map.put("title", title);
-		map.put("chapters", chapters);
-		return map;
+		String result = HttpRequestUtils.doGet(api.getHost() + BOOK + id, null);
+		return Jsoup.parse(result);
 	}
 
 	@Override
-	public Map findText(Integer id, Integer chapter) {
-		NovelApi api = mapper.selectByConnects();
-		String result = HttpRequestUtils.doGet(api.getUrl() + BOOK + "/" + id + "/" + chapter + ".html", null,
-				"GB2312");
-		Document doc = Jsoup.parse(result);
-		Element bookname = doc.getElementsByClass("bookname").first();
-		Element bottem = bookname.getElementsByClass("bottem1").first();
-		Elements as = bottem.getElementsByTag("a");
-		String prevUrl = null;
-		String nextUrl = null;
-		for (Element a : as) {
-			String text = a.text();
-			String href = a.attr("href");
-			if ("上一章".equals(text)) {
-				prevUrl = href;
-			} else if ("下一章".equals(text)) {
-				nextUrl = href;
-			} else {
-				;
-			}
-		}
-
-		Map map = new HashMap<>();
-		map.put("content", doc.getElementById("content").html());
-		map.put("title", bookname.getElementsByTag("h1").first().text());
-		if (prevUrl.contains(".")) {
-			map.put("prev", prevUrl.substring(prevUrl.lastIndexOf("/") + 1, prevUrl.lastIndexOf(".")));
-		} else {
-			map.put("next", null);
-		}
-		if (nextUrl.contains(".")) {
-			map.put("next", nextUrl.substring(nextUrl.lastIndexOf("/") + 1, nextUrl.lastIndexOf(".")));
-		} else {
-			map.put("next", null);
-		}
-		return map;
+	public String findBookTitle(Document doc, Integer id) {
+		String title = doc.select(".book a[href=/book/" + id + "/]").first().text();
+		return title.replace("最新章节", "");
 	}
 
 	@Override
-	public List<Map> findHots() {
-		NovelApi api = mapper.selectByConnects();
-		String result = HttpRequestUtils.doGet(api.getUrl(), null, "GB2312");
-		Document doc = Jsoup.parse(result);
-		Element r = doc.getElementsByClass("r").first();
-		Elements ul = r.getElementsByTag("li");
-		List<Map> list = new ArrayList<>();
-		for (Element li : ul) {
+	public List<Map> findChapters(Document doc) {
+		List<Map> maps = new ArrayList<>();
+
+		Elements chapters = doc.select(".listmain dd:gt(6)");
+		for (Element chapter : chapters) {
 			Map map = new HashMap<>();
-			Element s2 = li.getElementsByClass("s2").first();
-			String url = s2.getElementsByTag("a").first().attr("href");
-			url = url.substring(0, url.length() - 1);
-			String type = li.getElementsByClass("s1").first().text();
-			type = type.substring(1, type.length() - 1);
+			Element a = chapter.select("a").first();
+			String url = a.attr("href");
 
-			map.put("type", type);
-			map.put("title", s2.text());
-			map.put("id", url.substring(url.lastIndexOf("/") + 1));
-			map.put("author", li.getElementsByClass("s5").first().text());
-			list.add(map);
+			map.put("id", url.substring(url.lastIndexOf("/") + 1, url.lastIndexOf(".")));
+			map.put("title", a.text());
+
+			maps.add(map);
 		}
-		return list;
+		return maps;
+	}
+
+	@Override
+	public Document findChapterDoc(Integer id, Integer chapterId) {
+		NovelApi api = mapper.selectByConnects();
+		String result = HttpRequestUtils.doGet(api.getHost() + BOOK + id + "/" + chapterId + ".html", null, "gbk");
+		return Jsoup.parse(result);
+	}
+
+	@Override
+	public String findContent(Document doc) {
+		String content = doc.select("#content").first().text();
+		return content.substring(0, content.lastIndexOf("https"));
+	}
+
+	@Override
+	public String findChapterPrev(Document doc) {
+		String url = doc.select(".page_chapter a").get(0).attr("href");
+		return url.lastIndexOf(".") > 0 ? url.substring(url.lastIndexOf("/") + 1, url.lastIndexOf(".")) : "";
+	}
+
+	@Override
+	public String findChapterNext(Document doc) {
+		String url = doc.select(".page_chapter a").get(2).attr("href");
+		return url.lastIndexOf(".") > 0 ? url.substring(url.lastIndexOf("/") + 1, url.lastIndexOf(".")) : "";
 	}
 
 }
