@@ -169,7 +169,7 @@
 			</div>
 			<div class="search-item" th:each="item : ${items}">
 				<div>
-					<span class="s1" th:text="${itemStat.index}"></span> <span class="s2"><a th:href="@{'/novel/book/'+${item.id}}" target="_blank" th:text="${item.title}"></a></span> <span
+					<span class="s1" th:text="${itemStat.index + 1}"></span> <span class="s2"><a th:href="@{'/novel/book/'+${item.id}}" target="_blank" th:text="${item.title}"></a></span> <span
 						class="s4" th:text="${item.author}"></span>
 				</div>
 			</div>
