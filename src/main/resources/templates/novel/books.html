@@ -162,15 +162,17 @@
 		</div>
 	</div>
 	<div class="search-main">
-		<div class="search-list">
-			<h3 th:if="${#lists.isEmpty(items)}">未找到该小说</h3>
-			<div class="search-item">
-				<span class="s1"><b>序号</b></span> <span class="s2"><b>作品名称</b></span> <span class="s4"><b>作者</b></span>
-			</div>
-			<div class="search-item" th:each="item : ${items}">
-				<div>
-					<span class="s1" th:text="${itemStat.index + 1}"></span> <span class="s2"><a th:href="@{'/novel/book/'+${item.id}}" target="_blank" th:text="${item.title}"></a></span> <span
-						class="s4" th:text="${item.author}"></span>
+		<div class="search-list" th:switch="${#lists.isEmpty(items)}">
+			<h3 th:case="true">未找到该小说</h3>
+			<div th:case="false">
+				<div class="search-item">
+					<span class="s1"><b>序号</b></span> <span class="s2"><b>作品名称</b></span> <span class="s4"><b>作者</b></span>
+				</div>
+				<div class="search-item" th:each="item : ${items}">
+					<div>
+						<span class="s1" th:text="${itemStat.index + 1}"></span> <span class="s2"><a th:href="@{'/novel/book/'+${item.id}}" target="_blank" th:text="${item.title}"></a></span> <span
+							class="s4" th:text="${item.author}"></span>
+					</div>
 				</div>
 			</div>
 		</div>
