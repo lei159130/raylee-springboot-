@@ -1,14 +1,15 @@
 server:
-  port: 443
-  ssl:
-    key-store: classpath:lee1314.com.jks
-    key-store-password: ###
-    key-store-type: JKS
-
+  port: 8081
 spring:
-  profiles:    active:    - pro
-    
-  thymeleaf:    cache: false
-      
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/raylee?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false
+    username: root
+    password: root
+    dbcp2:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+logging:
+  level:
+    root: info
+
 mybatis:
-  mapper-locations:  - classpath*:**/mapper/**/*Mapper.xml
+  mapper-locations: classpath*:**/mapping/**/*Mapper.xml
