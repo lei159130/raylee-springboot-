@@ -7,7 +7,9 @@ import org.apache.ibatis.annotations.Select;
 
 import com.lee1314.raylee.modules.audio.pojo.entity.PeopleDaily;
 import com.lee1314.raylee.modules.audio.pojo.entity.example.PeopleDailyExample;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface PeopleDailyMapper {
 
 	long countByExample(PeopleDailyExample example);

@@ -4,9 +4,11 @@ import com.lee1314.raylee.modules.system.pojo.entity.SysConfig;
 
 import com.lee1314.raylee.modules.system.pojo.entity.example.SysConfigExample;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface SysConfigMapper {
     long countByExample(SysConfigExample example);
 
