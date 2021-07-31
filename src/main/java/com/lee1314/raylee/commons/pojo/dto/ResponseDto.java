@@ -1,5 +1,8 @@
 package com.lee1314.raylee.commons.pojo.dto;
 
+/**
+ * @author leili
+ */
 public class ResponseDto<T> {
     private String code;
     private String msg;

@@ -5,19 +5,22 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
+/**
+ * @author leili
+ */
 @Component
 public class SpringContext implements ApplicationContextAware {
-    private static final class singleton {
+    private static final class Singleton {
         private static ApplicationContext context;
     }
 
     public static ApplicationContext getInstance() {
-        return singleton.context;
+        return Singleton.context;
     }
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        singleton.context = applicationContext;
+        Singleton.context = applicationContext;
     }
 
     public static <T> T getBean(Class<T> clazz) {

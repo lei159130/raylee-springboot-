@@ -2,7 +2,7 @@ package com.lee1314.raylee.modules.system.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.lee1314.raylee.commons.pojo.dto.ResponseDto;
-import com.lee1314.raylee.modules.system.pojo.entity.SysConfig;
+import com.lee1314.raylee.modules.system.entity.SysConfig;
 import com.lee1314.raylee.modules.system.service.SysConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collections;
 
+/**
+ * @author leili
+ */
 @RestController
 @RequestMapping("sysConfig")
 public class SysConfigController {
