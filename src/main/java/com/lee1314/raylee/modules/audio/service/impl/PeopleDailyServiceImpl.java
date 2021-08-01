@@ -51,7 +51,7 @@ public class PeopleDailyServiceImpl implements PeopleDailyService {
     @Override
     public PeopleDaily queryNowIdBySeminarId(Integer seminarId) {
         QueryWrapper<PeopleDaily> wrapper = new QueryWrapper();
-        wrapper.eq("seminar_id", seminarId).orderByAsc("id").last("limit 1");
+        wrapper.eq("seminar_id", seminarId).orderByDesc("id").last("limit 1");
         return mapper.selectOne(wrapper);
     }
 
