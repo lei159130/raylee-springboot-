@@ -58,7 +58,7 @@ public class PeopleDailyServiceImpl implements PeopleDailyService {
     @Override
     public PeopleDaily queryPrevById(Integer seminarId, Integer id) {
         QueryWrapper<PeopleDaily> wrapper = new QueryWrapper();
-        wrapper.eq("seminar_id", seminarId).gt("id", id).orderByDesc("id").last("limit 1");
+        wrapper.eq("seminar_id", seminarId).gt("id", id).orderByAsc("id").last("limit 1");
         return mapper.selectOne(wrapper);
     }
 
@@ -72,7 +72,7 @@ public class PeopleDailyServiceImpl implements PeopleDailyService {
     @Override
     public PeopleDaily queryNextById(Integer seminarId, Integer id) {
         QueryWrapper<PeopleDaily> wrapper = new QueryWrapper();
-        wrapper.eq("seminar_id", seminarId).lt("id", id).orderByAsc("id").last("limit 1");
+        wrapper.eq("seminar_id", seminarId).lt("id", id).orderByDesc("id").last("limit 1");
         return mapper.selectOne(wrapper);
     }
 }
