@@ -1,2 +1,2 @@
 # raylee-springboot-
-雷力个人网站(springboot)
+个人网站(springboot)
